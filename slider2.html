@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polaroid-Style Image Slider with Arrows</title>
+    <style>
+        /* Slider container */
+        .slider-container {
+            width: 900px; /* Polaroid dimensions */
+            height: 1200px; /* Polaroid dimensions */
+            margin: 50px auto;
+            position: relative;
+            overflow: hidden;
+            border: 10px solid white;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); /* Polaroid-style white border */
+        }
+
+        /* Slides */
+        .slides {
+            display: flex;
+            width: calc(900px * 9); /* 9 slides at 900px each */
+            transition: transform 0.5s ease-in-out;
+        }
+
+        /* Individual slide */
+        .slide {
+            min-width: 900px; /* Each image takes 900px width */
+            height: 1200px;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensure the images fill the container without distortion */
+        }
+
+        /* Pagination (dots) */
+        .pagination {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 15px;
+            height: 15px;
+            background-color: #bbb;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .dot.active {
+            background-color: #717171;
+        }
+
+        /* Arrow buttons */
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .arrow-left {
+            left: 10px;
+        }
+
+        .arrow-right {
+            right: 10px;
+        }
+
+        .arrow:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Slider container -->
+<div class="slider-container">
+    <div class="slides">
+        <div class="slide">
+            <img src="image10.jfif" alt="Image 1">
+        </div>
+        <div class="slide">
+            <img src="image11.jfif" alt="Image 2">
+        </div>
+        <div class="slide">
+            <img src="image12.jfif" alt="Image 3">
+        </div>
+        <div class="slide">
+            <img src="image13.jfif" alt="Image 4">
+        </div>
+        <div class="slide">
+            <img src="image14.jfif" alt="Image 5">
+        </div>
+        <div class="slide">
+            <img src="image15.jfif" alt="Image 6">
+        </div>
+        <div class="slide">
+            <img src="image18.jfif" alt="Image 7">
+        </div>
+        <div class="slide">
+            <img src="image17.jfif" alt="Image 8">
+        </div>
+        <div class="slide">
+            <img src="image16.jfif" alt="Image 9">
+        </div>
+    </div>
+
+    <!-- Left arrow -->
+    <button class="arrow arrow-left" onclick="prevSlide()">&#10094;</button>
+
+    <!-- Right arrow -->
+    <button class="arrow arrow-right" onclick="nextSlide()">&#10095;</button>
+
+    <!-- Pagination (dots) -->
+    <div class="pagination">
+        <div class="dot" onclick="currentSlide(0)"></div>
+        <div class="dot" onclick="currentSlide(1)"></div>
+        <div class="dot" onclick="currentSlide(2)"></div>
+        <div class="dot" onclick="currentSlide(3)"></div>
+        <div class="dot" onclick="currentSlide(4)"></div>
+        <div class="dot" onclick="currentSlide(5)"></div>
+        <div class="dot" onclick="currentSlide(6)"></div>
+        <div class="dot" onclick="currentSlide(7)"></div>
+        <div class="dot" onclick="currentSlide(8)"></div>
+    </div>
+</div>
+
+<!-- JavaScript for Image Slider -->
+<script>
+    let currentIndex = 0;
+    const totalSlides = 9;
+
+    function showSlide(index) {
+        const slides = document.querySelector('.slides');
+        const dots = document.querySelectorAll('.dot');
+
+        slides.style.transform = `translateX(-${index * 900}px)`; // Move the slide
+        dots.forEach(dot => dot.classList.remove('active')); // Remove active class from all dots
+        dots[index].classList.add('active'); // Add active class to the clicked dot
+    }
+
+    function currentSlide(index) {
+        currentIndex = index;
+        showSlide(currentIndex);
+    }
+
+    function nextSlide() {
+        currentIndex = (currentIndex + 1) % totalSlides; // Loop around
+        showSlide(currentIndex);
+    }
+
+    function prevSlide() {
+        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides; // Loop around backward
+        showSlide(currentIndex);
+    }
+
+    // Initialize the first dot as active
+    document.addEventListener('DOMContentLoaded', function () {
+        currentSlide(0);
+    });
+</script>
+</body>
+</html>
